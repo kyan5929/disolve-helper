@@ -4,6 +4,7 @@ const emitter = require('./emitter')
 const proxy = require('./proxy')
 const config = require('./config')
 const notReady = 'CAPCHA_NOT_READY'
+const host = '89.108.117.181'
 class TwoCap {
   constructor(key, tasks, sitekey, page, proxyList) {
     this.key = key
@@ -17,7 +18,10 @@ class TwoCap {
   capID() {
     rp({
         proxy: proxy.formatProxy(this.proxyList[Math.floor(Math.random() * this.proxyList.length)]),
-        url: 'http://2captcha.com/in.php',
+        url: `http://${host}/in.php`,
+        headers: {
+          Host: '2captcha.com'
+        }
         method: 'POST',
         form: {
           key: this.key,
@@ -53,7 +57,10 @@ class TwoCap {
     log.verbose(`checking for recaptcha responses ${ids}`)
     rp({
         proxy: proxy.formatProxy(this.proxyList[Math.floor(Math.random() * this.proxyList.length)]),
-        url: 'http://2captcha.com/res.php',
+        url: `http://${host}/res.php`,
+        headers: {
+          Host: '2captcha.com'
+        }
         method: 'GET',
         qs: {
           key: this.key,

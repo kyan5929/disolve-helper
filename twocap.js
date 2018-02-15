@@ -21,7 +21,7 @@ class TwoCap {
         url: `http://${host}/in.php`,
         headers: {
           Host: '2captcha.com'
-        }
+        },
         method: 'POST',
         form: {
           key: this.key,
@@ -60,7 +60,7 @@ class TwoCap {
         url: `http://${host}/res.php`,
         headers: {
           Host: '2captcha.com'
-        }
+        },
         method: 'GET',
         qs: {
           key: this.key,

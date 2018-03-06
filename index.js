@@ -51,11 +51,15 @@ config.anticaptcha.keys.forEach(function (key) {
 
 emitter.on('twocapSolved', (data) => {
   let { worker, response } = data
-  sendResponse(response)
+  let now = Date.now()
+  let target = new Date(config.startSending)
+  if (now > target) sendResponse(response)
   worker.capID()
 })
 emitter.on('antiSolved', (data) => {
   let { worker, response } = data
-  sendResponse(response)
+  let now = Date.now()
+  let target = new Date(config.startSending)
+  if (now > target) sendResponse(response)
   worker.capID()
 })

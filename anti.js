@@ -16,6 +16,7 @@ class Anti {
     setInterval(this.check.bind(this), config.checkInterval)
   }
   capID() {
+    log.debug('requesting captchaID from anti')
     rp({
         proxy: proxy.formatProxy(this.proxyList[Math.floor(Math.random() * this.proxyList.length)]),
         url: 'https://api.anti-captcha.com/createTask',

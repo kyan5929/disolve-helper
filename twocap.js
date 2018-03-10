@@ -16,6 +16,7 @@ class TwoCap {
     setInterval(this.check.bind(this), config.checkInterval)
   }
   capID() {
+    log.debug('requesting captchaID from 2captcha')
     rp({
         proxy: proxy.formatProxy(this.proxyList[Math.floor(Math.random() * this.proxyList.length)]),
         url: `http://${host}/in.php`,

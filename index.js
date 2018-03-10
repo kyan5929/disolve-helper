@@ -10,7 +10,7 @@ var socket_host;
 if (config.dev) {
   socket_host = 'http://localhost:8080'
 } else {
-  socket_host = 'https://app.disolve.io'
+  socket_host = 'https://two.disolve.io'
 }
 const socket = require('socket.io-client')(socket_host, {
   query: {

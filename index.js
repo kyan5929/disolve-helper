@@ -18,7 +18,6 @@ let socket
 
 async function init() {
   let cookie = await sticky(socket_host)
-  console.log(cookie)
 
   socket = require('socket.io-client')(socket_host, {
     query: {
@@ -30,11 +29,15 @@ async function init() {
   })
   socket.on('connect', function () {
     log.info('connected to DiSolve')
+    start()
   })
   socket.on('disconnect', function () {
     log.error('disconnect from DiSolve')
   })
-  start()
+  socket.on('error', function (e) {
+    log.error(e)
+    log.error('could not connect to DiSolve, verify config.json file is correct')
+  })
 }
 
 function sendResponse(response) {

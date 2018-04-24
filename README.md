@@ -3,8 +3,9 @@ DiSolve Auto Captcha Helper Bot
 
 # Install
 ```bash
-git clone https://github.com/div3rse/disolve-helper.git
+git clone https://github.com/divrse/disolve-helper.git
 cd disolve-helper
+npm install
 ```
 # Usage
 1. Edit config.json

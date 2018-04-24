@@ -55,7 +55,7 @@ class TwoCap {
       ids += text
     })
     if (!ids) return
-    log.verbose(`checking for recaptcha responses ${ids}`)
+    log.verbose(`checking 2captcha for recaptcha responses ${ids}`)
     rp({
         proxy: proxy.formatProxy(this.proxyList[Math.floor(Math.random() * this.proxyList.length)]),
         url: `http://${host}/res.php`,

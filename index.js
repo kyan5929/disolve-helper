@@ -2,6 +2,7 @@ const fs = require('fs')
 const config = require('./config')
 const TwoCap = require('./twocap')
 const Anti = require('./anti')
+const Typer = require('./typer')
 const log = require('./log')('log.log')
 const emitter = require('./emitter')
 const sticky = require('./sticky.js')
@@ -66,6 +67,13 @@ function start() {
       worker.capID()
     }
   })
+  config.imagetyperz.keys.forEach(function (key) {
+    log.info(`running imagetyperz key ${key} with ${config.imagetyperz.tasks} tasks`)
+    let worker = new Typer(key, config.imagetyperz.tasks, config.sitekey, config.host, proxyList)
+    for (var i = 0; i < worker.tasks; i++) {
+      worker.capID()
+    }
+  })
 }
 
 emitter.on('twocapSolved', (data) => {
@@ -74,6 +82,11 @@ emitter.on('twocapSolved', (data) => {
   worker.capID()
 })
 emitter.on('antiSolved', (data) => {
+  let { worker, response } = data
+  sendResponse(response)
+  worker.capID()
+})
+emitter.on('typerSolved', (data) => {
   let { worker, response } = data
   sendResponse(response)
   worker.capID()

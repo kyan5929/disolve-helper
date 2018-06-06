@@ -30,7 +30,9 @@ async function init() {
   })
   socket.on('connect', function () {
     log.info('connected to DiSolve')
-    start()
+	  config.sites.forEach((site) => {
+		  start(site)
+	  })
   })
   socket.on('disconnect', function () {
     log.error('disconnect from DiSolve')
@@ -52,29 +54,36 @@ function sendResponse(response) {
   log.info('sent captcha response to DiSolve')
 }
 
-function start() {
-  config.twocaptcha.keys.forEach(function (key) {
-    log.info(`running 2captcha key ${key} with ${config.twocaptcha.tasks} tasks`)
-    let worker = new TwoCap(key, config.twocaptcha.tasks, config.sitekey, config.host, proxyList)
+function start(site) {
+	if (config.twocaptcha && config.twocaptcha.keys) {
+
+	config.twocaptcha.keys.forEach(function (key) {
+    log.info(`running 2captcha key ${key} on ${site.host} with ${config.twocaptcha.tasks} tasks`)
+    let worker = new TwoCap(key, config.twocaptcha.tasks, site.sitekey, site.host, proxyList)
     for (var i = 0; i < worker.tasks; i++) {
       worker.capID()
     }
   })
+	}
+
+	if (config.anticaptcha && config.anticaptcha.keys) {
   config.anticaptcha.keys.forEach(function (key) {
-    log.info(`running anti captcha key ${key} with ${config.anticaptcha.tasks} tasks`)
-    let worker = new Anti(key, config.anticaptcha.tasks, config.sitekey, config.host, proxyList)
+    log.info(`running anti captcha key ${key} on ${site.host} with ${config.anticaptcha.tasks} tasks`)
+    let worker = new Anti(key, config.anticaptcha.tasks, site.sitekey, site.host, proxyList)
     for (var i = 0; i < worker.tasks; i++) {
       worker.capID()
     }
   })
+	}
+	if (config.imagetyperz && config.imagetyperz.keys) {
   config.imagetyperz.keys.forEach(function (key) {
-    log.info(`running imagetyperz key ${key} with ${config.imagetyperz.tasks} tasks`)
-    let worker = new Typer(key, config.imagetyperz.tasks, config.sitekey, config.host, proxyList)
+    log.info(`running imagetyperz key ${key} on ${site.host} with ${config.imagetyperz.tasks} tasks`)
+    let worker = new Typer(key, config.imagetyperz.tasks, site.sitekey, site.host, proxyList)
     for (var i = 0; i < worker.tasks; i++) {
       worker.capID()
     }
   })
-}
+	}
 
 emitter.on('twocapSolved', (data) => {
   let { worker, response } = data
@@ -91,4 +100,5 @@ emitter.on('typerSolved', (data) => {
   sendResponse(response)
   worker.capID()
 })
+}
 init()

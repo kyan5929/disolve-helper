@@ -10,7 +10,7 @@
   "author": "Diverse",
   "license": "MIT",
   "dependencies": {
-    "request": "^2.83.0",
+    "request": "^2.87.0",
     "request-promise": "^4.2.2",
     "socket.io-client": "^2.0.4",
     "winston": "^2.4.0"

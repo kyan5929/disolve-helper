@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "same": "node index.js same",
     "test": "mocha"
   },
   "author": "Diverse",

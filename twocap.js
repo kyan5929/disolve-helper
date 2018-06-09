@@ -4,7 +4,8 @@ const emitter = require('./emitter')
 const proxy = require('./proxy')
 const config = require('./config')
 const notReady = 'CAPCHA_NOT_READY'
-const host = '2captcha.com'
+const host =  process.argv[2] ==  'same' ? '89.108.117.181' : '2captcha.com'
+console.log(host)
 class TwoCap {
   constructor(key, tasks, sitekey, page, proxyList) {
     this.key = key

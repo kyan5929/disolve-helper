@@ -5,13 +5,13 @@ const proxy = require('./proxy')
 const config = require('./config')
 const notReady = 'CAPCHA_NOT_READY'
 const host =  process.argv[2] ==  'same' ? '89.108.117.181' : '2captcha.com'
-console.log(host)
 class TwoCap {
-  constructor(key, tasks, sitekey, page, proxyList) {
+  constructor(key, tasks, site, proxyList) {
     this.key = key
     this.tasks = tasks
-    this.sitekey = sitekey
-    this.page = page
+    this.site = site
+    this.sitekey = site.sitekey
+    this.page = site.host
     this.captchas = []
     this.proxyList = proxyList
     setInterval(this.check.bind(this), config.checkInterval)

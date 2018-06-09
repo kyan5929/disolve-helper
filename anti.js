@@ -5,11 +5,12 @@ const proxy = require('./proxy')
 const config = require('./config')
 const notReady = 'CAPCHA_NOT_READY'
 class Anti {
-  constructor(key, tasks, sitekey, page, proxyList) {
+  constructor(key, tasks, site, proxyList) {
     this.key = key
     this.tasks = tasks
-    this.sitekey = sitekey
-    this.page = page
+    this.site = site
+    this.sitekey = site.sitekey
+    this.page = site.host
     this.pageurl = `http://${this.page}`
     this.captchas = []
     this.proxyList = proxyList

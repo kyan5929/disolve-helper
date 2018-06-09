@@ -5,11 +5,12 @@ const proxy = require('./proxy')
 const config = require('./config')
 const baseURL = 'http://captchatypers.com'
 class Typer {
-  constructor(key, tasks, sitekey, page, proxyList) {
+  constructor(key, tasks, site, proxyList) {
     this.key = key
     this.tasks = tasks
-    this.sitekey = sitekey
-    this.page = page
+    this.site = site
+    this.sitekey = site.sitekey
+    this.page = site.host
     this.captchas = []
     this.proxyList = proxyList
     setInterval(this.check.bind(this), config.checkInterval)

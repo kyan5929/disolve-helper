@@ -43,11 +43,11 @@ async function init() {
   })
 }
 
-function sendResponse(response) {
+function sendResponse(response, site) {
   var captcha = {
     key: response,
-    host: config.host,
-    sitekey: config.sitekey,
+    host: site.host,
+    sitekey: site.sitekey,
     apiKey: config.apiKey
   }
   socket.emit('solve', captcha)
@@ -59,7 +59,7 @@ function start(site) {
 
 	config.twocaptcha.keys.forEach(function (key) {
     log.info(`running 2captcha key ${key} on ${site.host} with ${config.twocaptcha.tasks} tasks`)
-    let worker = new TwoCap(key, config.twocaptcha.tasks, site.sitekey, site.host, proxyList)
+    let worker = new TwoCap(key, config.twocaptcha.tasks, site, proxyList)
     for (var i = 0; i < worker.tasks; i++) {
       worker.capID()
     }
@@ -69,7 +69,7 @@ function start(site) {
 	if (config.anticaptcha && config.anticaptcha.keys) {
   config.anticaptcha.keys.forEach(function (key) {
     log.info(`running anti captcha key ${key} on ${site.host} with ${config.anticaptcha.tasks} tasks`)
-    let worker = new Anti(key, config.anticaptcha.tasks, site.sitekey, site.host, proxyList)
+    let worker = new Anti(key, config.anticaptcha.tasks, site, proxyList)
     for (var i = 0; i < worker.tasks; i++) {
       worker.capID()
     }
@@ -78,7 +78,7 @@ function start(site) {
 	if (config.imagetyperz && config.imagetyperz.keys) {
   config.imagetyperz.keys.forEach(function (key) {
     log.info(`running imagetyperz key ${key} on ${site.host} with ${config.imagetyperz.tasks} tasks`)
-    let worker = new Typer(key, config.imagetyperz.tasks, site.sitekey, site.host, proxyList)
+    let worker = new Typer(key, config.imagetyperz.tasks, site, proxyList)
     for (var i = 0; i < worker.tasks; i++) {
       worker.capID()
     }
@@ -87,17 +87,17 @@ function start(site) {
 
 emitter.on('twocapSolved', (data) => {
   let { worker, response } = data
-  sendResponse(response)
+  sendResponse(response, worker.site)
   worker.capID()
 })
 emitter.on('antiSolved', (data) => {
   let { worker, response } = data
-  sendResponse(response)
+  sendResponse(response, worker.site)
   worker.capID()
 })
 emitter.on('typerSolved', (data) => {
   let { worker, response } = data
-  sendResponse(response)
+  sendResponse(response, worker.site)
   worker.capID()
 })
 }

@@ -26,7 +26,8 @@ async function init() {
     },
     extraHeaders: {
       Cookie: cookie
-    }
+    },
+	  transports: ['websocket']
   })
   socket.on('connect', function () {
     log.info('connected to DiSolve')

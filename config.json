@@ -8,7 +8,7 @@
   }],
   "twocaptcha": {
     "keys": [
-      "key1",
+      "cf8c13db98bbab66ece97efb80cccc99",
       "key2",
       "unlimitedKeys"
     ],
@@ -16,7 +16,7 @@
   },
   "anticaptcha": {
     "keys": [
-      "key1",
+      "40ea5d819c76ff7ae162b9ca3e245a61",
       "key2",
       "unlimitedKeys"
     ],
